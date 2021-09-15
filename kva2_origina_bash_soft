@@ -1,0 +1,107 @@
+#!/bin/bash
+clear
+printf "\n\n===СКРИПТОТААА===\n\nСейчас мы переместимся в каталог с сохраненными vim-сессиями \n"
+cd ~/others/templates/vim_session
+
+#Удаляем старый и создаем новый файл где перечислены названи всех уже существующих сессий vim
+rm ~/tmp/kva2.buff
+ls >> ~/tmp/kva2.buff
+
+p_pwd=`pwd`
+printf "Теперь текущем каталогом является $p_pwd \n"
+printf "Посмотрите какие сохраненные vim-сессии уже есть: \n"
+
+p_ls=`ls`
+printf "\n$p_ls \n\n"
+
+printf "Если вы хотите открыть сохраненную сессию, нажмите \"o\" для выбора файла \nЕсли вы хотите сохранить сессию, нажмите \"s\" \n"
+echo -n "Нажмите выбранную кнопку:"
+read sorn
+
+function new_corn {
+	printf "Если вы хотите открыть сохраненную сессию, нажмите \"o\" для выбора файла \nЕсли вы хотите сохранить сессию, нажмите \"s\" \n"
+	echo -n "Нажмите выбранную кнопку:"
+	read sorn
+	kontrol_0 
+}
+
+function kontrol_0 {
+	if [[ $sorn == o ]]; then
+		whatimustdo=1
+		echo "$whatimustdu"
+	elif [[ $sorn == s ]]; then
+		whatimustdo=2
+		echo "$whatimustdu"
+	elif [[ $corn != s||o ]]; then 
+		printf "Вы ввели неверный символ. Пропробуйте еще раз. \n"
+		new_corn
+	fi
+}
+
+kontrol_0
+
+if [[ $whatimustdo -eq 1 ]]; then
+	printf "Начинаем процедуру открытия ранее сохраненной сессии \n"
+	printf "Введите имя сессии, которую нужно открыть:"
+	read open_session_name
+
+# СКРИПТ ПРОВЕРКИ ПРАВИЛЬНОСТИ ВВЕДЕННЫХ ДАННЫХ:
+# Сравниваем значение переменной open_session_name с каждой строкой файла kva2.buff по очереди. Если находим совпадение, значит ОК. Если сравнив все, не находим совпадение - значит НЕТ.
+
+# Функция для проверки введеных данных
+function check_name {
+	number=`sort ~/tmp/kva2.buff | uniq -u | wc -l` # Выясним колличество строк в файле и присвоим это колличестов переменной number
+	IFS=$'\n' # задаем, что считать разделителем строки
+	# Читаем каждую строку и присваиваем ее содержимое переменной 
+	rrr=`read -r line$RANDOM`
+
+		for run in $number; do
+			{ rrr ; < ~/tmp/kva2.buff}
+		done
+
+# Этот блок работает для контроя. Вопрос в том, как проверсти проверку нужно число раз, чтобы это автоматически было задано.
+#	{ read -r line ; read -r line2 ; } < ~/tmp/kva2.buff # Переменной line присвоено значение 1 строки, line2 -2
+#	echo "$number"
+#	echo "$line"
+#	echo "$line2"
+#	seq $number #Значения от 0 до занчения перемнной number
+
+}
+
+check_name
+
+#	test=`watch -n$number read -r ~/tmp/kva2.buff`
+#
+#	if [[ $open_session_name == $test ]]; then
+#		echo "BAAAAA!!!"
+#	else
+#		echo "KVAAAA!!!!"
+#	fi
+
+
+
+
+#	if [[ $(< ~/tmp/kva2.buff) != $open_session_name]]; then
+#		printf "Введенное вами имя не существует. Убейтесь об стену"
+#	else 
+#		vim -S ~/others/templates/vim_session/$open_session_name
+#
+
+
+
+
+elif [[ $whatimustdo -eq 2 ]]; then
+	printf "Начинаем процедуру сохранения текущей сессии \n"
+	printf "Введите новое имя для текущей сессии: "
+	read new_session_name
+	???? ~/others/templates/vim_session/$new_session_name.vim
+fi
+
+
+
+
+
+
+# Конец программы
+read -s -p "Работа скрипта завершена. Нажмите Ввод для выхода из программы." -n 1
+clear
